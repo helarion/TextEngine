@@ -1,0 +1,29 @@
+{
+  "textInput": [
+    {
+      "id": "AskName",
+      "needsRecord": true,
+      "recordVariable": "name"
+    },
+    {
+      "id": "AskAction",
+      "needsRecord": false,
+      "answers": {
+        "acceptableWords": [
+          "avancer, avant, devant"
+        ],
+        "leadsTo": "GoForward"
+      }
+    },
+    {
+      "id": "AskAction",
+      "needsRecord": false,
+      "answers": {
+        "acceptableWords": [
+          "reculer, arriere"
+        ],
+        "leadsTo": ""
+      }
+    }
+  ]
+}

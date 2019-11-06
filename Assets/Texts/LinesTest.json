@@ -1,0 +1,70 @@
+{
+  "lineType": [
+    {
+      "id": "START",
+      "size": 52,
+      "waitLetter": 0.1,
+      "waitSentence": 2,
+      "waitDramatic": 0.5,
+      "waitForInput": true,
+      "waitForTextInput": false,
+      "sentence": [
+        "Hello",
+        "You're <color=red>the one</color> I'm waiting for"
+      ],
+      "changesLine": false
+    },
+    {
+      "id": "AskName",
+      "size": 52,
+      "waitLetter": 0.1,
+      "waitSentence": 2,
+      "waitDramatic": 0.5,
+      "waitForInput": false,
+      "waitForTextInput": true,
+      "sentence": [
+        "How shall I name <color=red>you</color>?"
+      ],
+      "changesline": false
+    },
+    {
+      "id": "AskAction",
+      "size": 52,
+      "waitLetter": 0.1,
+      "waitSentence": 2,
+      "waitDramatic": 0.5,
+      "waitForInput": false,
+      "waitForTextInput": true,
+      "sentence": [
+        "Understood** now* what do you want to do?"
+      ],
+      "changesline": false
+    },
+    {
+      "id": "GoForward",
+      "size": 52,
+      "waitLetter": 0.1,
+      "waitSentence": 2,
+      "waitDramatic": 0.5,
+      "waitForInput": true,
+      "waitForTextInput": false,
+      "sentence": [
+        "You chose to go forward"
+      ],
+      "changesline": false
+    },
+    {
+      "id": "GoBackward",
+      "size": 52,
+      "waitLetter": 0.1,
+      "waitSentence": 2,
+      "waitDramatic": 0.5,
+      "waitForInput": true,
+      "waitForTextInput": false,
+      "sentence": [
+        "You chose to go backward"
+      ],
+      "changesline": false
+    }
+  ]
+}
