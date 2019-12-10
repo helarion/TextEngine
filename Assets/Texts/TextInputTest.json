@@ -10,7 +10,7 @@
       "needsRecord": false,
       "answers": {
         "acceptableWords": [
-          "avancer, avant, devant"
+          "avancer", "avant", "devant"
         ],
         "leadsTo": "GoForward"
       }
@@ -20,9 +20,9 @@
       "needsRecord": false,
       "answers": {
         "acceptableWords": [
-          "reculer, arriere"
+          "reculer", "arriere"
         ],
-        "leadsTo": ""
+        "leadsTo": "GoBackward"
       }
     }
   ]

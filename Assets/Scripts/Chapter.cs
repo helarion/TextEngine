@@ -17,6 +17,9 @@ public class Chapter : MonoBehaviour
     private bool waitForInput;
     private bool waitForTextInput;
     private string currentTextId;
+    private bool changesLine;
+    private string idNextLine;
+    public int maxInputLength;
 
     private LineType currentLineType;
     private string currentSentence;
@@ -33,6 +36,7 @@ public class Chapter : MonoBehaviour
 
     bool isReadingBalise = false;
     bool isWaitingInput = false;
+    string previousLineID;
 
     private void Start()
     {
@@ -66,6 +70,11 @@ public class Chapter : MonoBehaviour
         ReadSentence();
     }
 
+    public void LaunchErrorText()
+    {
+        GoToLineId("Error");
+    }
+
     public void StartChapter()
     {
         GameManager.Instance.bipSource.clip = clip;
@@ -76,6 +85,9 @@ public class Chapter : MonoBehaviour
     {
         if(currentLineTypeID < linesJson.lineType.Length)
         {
+            if(currentLineType!=null)
+                previousLineID = currentLineType.id;
+
             currentSentenceID = 0;
             currentLineType = linesJson.lineType[currentLineTypeID];
             currentTextId = currentLineType.id;
@@ -85,6 +97,9 @@ public class Chapter : MonoBehaviour
             waitDramaticRythm = currentLineType.waitDramatic;
             waitForInput = currentLineType.waitForInput;
             waitForTextInput = currentLineType.waitForTextInput;
+            changesLine = currentLineType.changesLine;
+            idNextLine = currentLineType.idNextLine;
+            maxInputLength = currentLineType.maxInputLength;
             ReadSentence();
         }
         else
@@ -101,7 +116,7 @@ public class Chapter : MonoBehaviour
 
     void ReadSentence()
     {
-        if(currentSentenceID<currentLineType.sentence.Length)
+        if (currentSentenceID<currentLineType.sentence.Length)
         {
             currentSentence = currentLineType.sentence[currentSentenceID];
             StopAllCoroutines();
@@ -109,14 +124,17 @@ public class Chapter : MonoBehaviour
         }
         else
         {
-            if(!currentLineType.changesLine)
+            if(!changesLine)
             {
                 currentLineTypeID++;
                 ReadLineType();
             }
             else
             {
-                GoToLineId(currentLineType.idNextLine);
+                if(idNextLine.Equals("lastID"))
+                    GoToLineId(previousLineID);
+                else
+                    GoToLineId(idNextLine);
             }
         }
     }
@@ -164,12 +182,15 @@ public class Chapter : MonoBehaviour
         else
         {
             yield return new WaitForSeconds(waitBetweenSentences);
-            NextSentence();
+            StartCoroutine(NextSentence());
         }
     }
 
     public void GoToLineId(string id)
     {
+        if(id != "Error")
+            previousLineID = currentLineType.id;
+
         int i = 0;
         foreach(LineType line in linesJson.lineType)
         {
@@ -177,7 +198,7 @@ public class Chapter : MonoBehaviour
             {
                 currentLineTypeID = i;
                 currentSentenceID = 0;
-                ReadSentence();
+                ReadLineType();
                 break;
             }
             else

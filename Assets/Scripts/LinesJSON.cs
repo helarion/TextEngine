@@ -19,6 +19,7 @@ public class LineType
     public float waitDramatic;
     public bool waitForInput;
     public bool waitForTextInput;
+    public int maxInputLength;
     public string[] sentence;
     public bool changesLine;
     public string idNextLine;

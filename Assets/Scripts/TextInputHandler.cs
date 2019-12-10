@@ -45,7 +45,7 @@ public class TextInputHandler : MonoBehaviour
             }
             previousLength = inputField.text.Length;
 
-            if (Input.GetButtonDown("Submit"))
+            if (Input.GetButtonDown("Submit") && inputField.text.Length>0)
             {
                 isWaitingTextInput = false;
                 GameManager.Instance.PlaySubmitSound();
@@ -64,41 +64,52 @@ public class TextInputHandler : MonoBehaviour
     public void ProcessAnswer()
     {
         string answer = inputField.text;
-        List<int> idList = LookForID(currentInputID);
-        foreach(int currentID in idList)
+        isWaitingTextInput = false;
+        inputField.text = "";
+        GameManager.Instance.DisableInputText();
+
+        if (answer.Length > GameManager.Instance.currentChapter.maxInputLength)
         {
-            if (textInputJson.textInput[currentID].needsRecord)
-            {
-                RecordAnswer(textInputJson.textInput[currentID].recordVariable, answer);
-                GameManager.Instance.DisableInputText();
-                GameManager.Instance.ResumeChapter();
-            }
-            else
-            {
-                Answer an = textInputJson.textInput[currentID].answers;
-                foreach (string possibleAnswer in an.acceptableWords)
-                {
-                    if(answer.Equals(possibleAnswer))
-                    {
-                        GameManager.Instance.ChapterGoTo(an.leadsTo);
-                        hasFound = true;
-                        break;
-                    }
-                }
-            }
-            if(hasFound)
-            {
-                break;
-            }
-        }
-        if(hasFound)
-        {
-            hasFound = false;
+            GameManager.Instance.ChapterGoTo("TooLong");
         }
         else
         {
-            inputField.text = "";
-            isWaitingTextInput = true;
+            List<int> idList = LookForID(currentInputID);
+            foreach (int currentID in idList)
+            {
+                if (textInputJson.textInput[currentID].needsRecord)
+                {
+                    RecordAnswer(textInputJson.textInput[currentID].recordVariable, answer);
+                    inputField.text = "";
+                    GameManager.Instance.DisableInputText();
+                    GameManager.Instance.ResumeChapter();
+                    hasFound = true;
+                }
+                else
+                {
+                    Answer an = textInputJson.textInput[currentID].answers;
+                    foreach (string possibleAnswer in an.acceptableWords)
+                    {
+                        print("Input:" + answer + " possible answer:" + possibleAnswer);
+                        if (answer.Equals(possibleAnswer))
+                        {
+                            print("match found");
+                            GameManager.Instance.ChapterGoTo(an.leadsTo);
+                            hasFound = true;
+                            break;
+                        }
+                    }
+                }
+                if (hasFound)
+                {
+                    break;
+                }
+            }
+            if (!hasFound)
+            {
+                GameManager.Instance.ChapterGoTo("Error");
+            }
+            hasFound = false;
         }
     }
 
@@ -121,9 +132,11 @@ public class TextInputHandler : MonoBehaviour
         List<int> list = new List<int>();
         foreach(TextInput ti in textInputJson.textInput)
         {
+            //print("Input:" + ti.id + " id:" + id);
             if(ti.id.Equals(id))
             {
                 list.Add(i);
+                //print("match found");
             }
             i++;
         }

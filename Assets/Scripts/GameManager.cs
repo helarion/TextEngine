@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        textCenter.text = "";
         StartCoroutine(StartGame());
     }
 

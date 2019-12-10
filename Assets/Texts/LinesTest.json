@@ -22,10 +22,24 @@
       "waitDramatic": 0.5,
       "waitForInput": false,
       "waitForTextInput": true,
+      "maxInputLength": 12,
       "sentence": [
         "How shall I name <color=red>you</color>?"
       ],
-      "changesline": false
+      "changesLine": false
+    },
+    {
+      "id": "Understood",
+      "size": 52,
+      "waitLetter": 0.1,
+      "waitSentence": 0.5,
+      "waitDramatic": 0.5,
+      "waitForInput": false,
+      "waitForTextInput": false,
+      "sentence": [
+        "Understood** now"
+      ],
+      "changesLine": false
     },
     {
       "id": "AskAction",
@@ -35,10 +49,11 @@
       "waitDramatic": 0.5,
       "waitForInput": false,
       "waitForTextInput": true,
+      "maxInputLength":  12,
       "sentence": [
-        "Understood** now* what do you want to do?"
+        "What do you want to do?"
       ],
-      "changesline": false
+      "changesLine": false
     },
     {
       "id": "GoForward",
@@ -51,7 +66,8 @@
       "sentence": [
         "You chose to go forward"
       ],
-      "changesline": false
+      "changesLine": true,
+      "idNextLine": "End"
     },
     {
       "id": "GoBackward",
@@ -64,7 +80,49 @@
       "sentence": [
         "You chose to go backward"
       ],
-      "changesline": false
+      "changesLine": true,
+      "idNextLine": "End"
+    },
+    {
+      "id": "TooLong",
+      "size": 52,
+      "waitLetter": 0.08,
+      "waitSentence": 0,
+      "waitDramatic": 0.2,
+      "waitForInput": false,
+      "waitForTextInput": false,
+      "sentence": [
+        "It's too long"
+      ],
+      "changesLine": true,
+      "idNextLine": "lastID"
+    },
+    {
+      "id": "Error",
+      "size": 52,
+      "waitLetter": 0.08,
+      "waitSentence": 0,
+      "waitDramatic": 0.2,
+      "waitForInput": false,
+      "waitForTextInput": false,
+      "sentence": [
+        "Say again ?"
+      ],
+      "changesLine": true,
+      "idNextLine": "lastID"
+    },
+    {
+      "id": "End",
+      "size": 52,
+      "waitLetter": 0.1,
+      "waitSentence": 2,
+      "waitDramatic": 0.5,
+      "waitForInput": true,
+      "waitForTextInput": false,
+      "sentence": [
+        "That's the end of the chapter"
+      ],
+      "changesLine": false
     }
   ]
 }
